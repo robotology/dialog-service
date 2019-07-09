@@ -1,0 +1,474 @@
+
+///////////////SOLO LETTURA FILE AUDIO CUSTOMIZZATO VOCE WATSON   (audio 2s)
+
+///////////////SOLO LETTURA FILE AUDIO CUSTOMIZZATO VOCE WATSON   (audio 5s)
+
+
+
+gdangelo@iitlw1353:~/workspace/R1_Watson.js/car-dashboard (wipWatson)$ npm start
+
+> watson-assistant-car-dashboard@0.1.0 start /home/gdangelo/workspace/R1_Watson.js/car-dashboard
+> node server.js
+
+yarp: Port /ibmjs/text:i active at tcp://10.255.111.92:10007/
+yarp: Port /ibmjs/text:o active at tcp://10.255.111.92:10008/
+yarp: Port /ibmjs/sound:i active at tcp://10.255.111.92:10009/
+yarp: Port /ibmjs/speech_to_text:o active at tcp://10.255.111.92:10010/
+yarp: Port /ibmjs/text_to_speech:i active at tcp://10.255.111.92:10011/
+Yarp Server running on port: 5000
+IBM Server running on port: 4000
+Hi. It looks like a nice drive today. What would you like me to do?  
+connected
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+Message from STT:  "hello Julia it seems it is gonna raining do you have an umbrella "
+time:  1531294340368
+Message from Yarp:  "hello Julia it seems it is gonna raining do you have an umbrella "
+Unfortunately I don't know much about the weather. I'm still learning.
+Message from STT:  "hello Julia it seems it is gonna raining do you have an umbrella "
+time:  1531294341184
+Message from Yarp:  "hello Julia it seems it is gonna raining do you have an umbrella "
+{ Error: Stream was 0 bytes but needs to be at least 100 bytes.
+    at Request._callback (/home/gdangelo/workspace/R1_Watson.js/car-dashboard/node_modules/watson-developer-cloud/lib/requestwrapper.js:102:21)
+    at Request.self.callback (/home/gdangelo/workspace/R1_Watson.js/car-dashboard/node_modules/request/request.js:186:22)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request.<anonymous> (/home/gdangelo/workspace/R1_Watson.js/car-dashboard/node_modules/request/request.js:1163:10)
+    at emitOne (events.js:116:13)
+    at Request.emit (events.js:211:7)
+    at IncomingMessage.<anonymous> (/home/gdangelo/workspace/R1_Watson.js/car-dashboard/node_modules/request/request.js:1085:12)
+    at Object.onceWrapper (events.js:313:30)
+    at emitNone (events.js:111:20)
+  code: 400,
+  code_description: 'Bad Request',
+  error: 'Stream was 0 bytes but needs to be at least 100 bytes.',
+  'x-global-transaction-id': '7a6c26455b45b2851ba0ea15' }
+yarp: Removing input from /sender to /ibmjs/sound:i
+Unfortunately I don't know much about the weather. I'm still learning.
+Message from STT:  "hello Julia it seems it is gonna raining do you have an umbrella "
+time:  1531294342569
+Message from Yarp:  "hello Julia it seems it is gonna raining do you have an umbrella "
+Unfortunately I don't know much about the weather. I'm still learning.
+Message from STT:  "unfortunately I "
+time:  1531294343938
+Message from Yarp:  "unfortunately I "
+Message from STT:  "hello Julia it seems it is gonna raining do you have an umbrella "
+time:  1531294344148
+Message from Yarp:  "hello Julia it seems it is gonna raining do you have an umbrella "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "hello Julia it seems it is gonna raining do you have an umbrella "
+time:  1531294344985
+Message from Yarp:  "hello Julia it seems it is gonna raining do you have an umbrella "
+Unfortunately I don't know much about the weather. I'm still learning.
+Unfortunately I don't know much about the weather. I'm still learning.
+^C/ibmjs/text:i
+yarp: Removing input from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Removing output from /ibmjs/speech_to_text:o to /ibmjs/text:i
+/ibmjs/text:o
+yarp: Removing input from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Removing output from /ibmjs/text:o to /ibmjs/text_to_speech:i
+/ibmjs/sound:i
+/ibmjs/speech_to_text:o
+/ibmjs/text_to_speech:i
+
+┌────────────────────────────────────────────────────────────┐
+│                  npm update check failed                   │
+│            Try running with sudo or get access             │
+│            to the local update config store via            │
+│ sudo chown -R $USER:$(id -gn $USER) /home/gdangelo/.config │
+└────────────────────────────────────────────────────────────┘
+
+
+///////////////SCRITTURA WAV FILE
+
+
+gdangelo@iitlw1353:~/workspace/R1_Watson.js/car-dashboard (wipWatson)$ npm start
+
+> watson-assistant-car-dashboard@0.1.0 start /home/gdangelo/workspace/R1_Watson.js/car-dashboard
+> node server.js
+
+yarp: Port /ibmjs/text:i active at tcp://10.255.111.92:10007/
+yarp: Port /ibmjs/text:o active at tcp://10.255.111.92:10008/
+yarp: Port /ibmjs/sound:i active at tcp://10.255.111.92:10009/
+yarp: Port /ibmjs/speech_to_text:o active at tcp://10.255.111.92:10010/
+yarp: Port /ibmjs/text_to_speech:i active at tcp://10.255.111.92:10011/
+Yarp Server running on port: 5000
+IBM Server running on port: 4000
+Hi. It looks like a nice drive today. What would you like me to do?  
+connected
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+Wav file creation ...
+time:  1531295177486
+Wav file created !
+time:  1531295177490
+I am receiving sound ...
+yarp: Removing input from /sender to /ibmjs/sound:i
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Removing input from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Removing output from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Removing output from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Removing input from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+Wav file creation ...
+time:  1531295300072
+Wav file created !
+time:  1531295300073
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+yarp: Removing input from /sender to /ibmjs/sound:i
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Removing output from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Removing input from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Removing input from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Removing output from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+I am receiving sound ...
+Wav file creation ...
+time:  1531295364139
+Wav file created !
+time:  1531295364140
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+Wav file creation ...
+time:  1531295369107
+Wav file created !
+time:  1531295369109
+yarp: Removing input from /sender to /ibmjs/sound:i
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Removing input from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Removing output from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Removing output from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Removing input from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+I am receiving sound ...
+Wav file creation ...
+time:  1531295434199
+Wav file created !
+time:  1531295434201
+I am receiving sound ...
+yarp: Removing input from /sender to /ibmjs/sound:i
+^C/ibmjs/text:i
+Segmentation fault (core dumped)
+
+┌────────────────────────────────────────────────────────────┐
+│                  npm update check failed                   │
+│            Try running with sudo or get access             │
+│            to the local update config store via            │
+│ sudo chown -R $USER:$(id -gn $USER) /home/gdangelo/.config │
+└────────────────────────────────────────────────────────────┘
+
+
+
+
+///////////////SOLO LETTURA FILE AUDIO HUMAN VOICE try.wav
+
+
+gdangelo@iitlw1353:~/workspace/R1_Watson.js/car-dashboard (wipWatson)$ npm start
+
+> watson-assistant-car-dashboard@0.1.0 start /home/gdangelo/workspace/R1_Watson.js/car-dashboard
+> node server.js
+
+yarp: Port /ibmjs/text:i active at tcp://10.255.111.92:10007/
+yarp: Port /ibmjs/text:o active at tcp://10.255.111.92:10008/
+yarp: Port /ibmjs/sound:i active at tcp://10.255.111.92:10009/
+yarp: Port /ibmjs/speech_to_text:o active at tcp://10.255.111.92:10010/
+yarp: Port /ibmjs/text_to_speech:i active at tcp://10.255.111.92:10011/
+Yarp Server running on port: 5000
+IBM Server running on port: 4000
+connected
+Hi. It looks like a nice drive today. What would you like me to do?  
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+Message from STT:  "how are you "
+time:  1531295594872
+Message from Yarp:  "how are you "
+Hello! I'm doing good. I'm here to help you. Just say the word.
+yarp: Removing input from /sender to /ibmjs/sound:i
+Message from STT:  "how are you "
+time:  1531295595677
+Message from Yarp:  "how are you "
+Hello! I'm doing good. I'm here to help you. Just say the word.
+Message from STT:  "how are you "
+time:  1531295596564
+Message from Yarp:  "how are you "
+Hello! I'm doing good. I'm here to help you. Just say the word.
+Message from STT:  "how are you "
+time:  1531295597480
+Message from Yarp:  "how are you "
+Hello! I'm doing good. I'm here to help you. Just say the word.
+Message from STT:  "how are you "
+time:  1531295598781
+Message from Yarp:  "how are you "
+Hello! I'm doing good. I'm here to help you. Just say the word.
+Message from STT:  "how are you "
+time:  1531295599679
+Message from Yarp:  "how are you "
+Hello! I'm doing good. I'm here to help you. Just say the word.
+^C^[[A/ibmjs/text:i
+yarp: Removing input from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Removing output from /ibmjs/speech_to_text:o to /ibmjs/text:i
+/ibmjs/text:o
+yarp: Removing input from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Removing output from /ibmjs/text:o to /ibmjs/text_to_speech:i
+/ibmjs/sound:i
+/ibmjs/speech_to_text:o
+/ibmjs/text_to_speech:i
+
+┌────────────────────────────────────────────────────────────┐
+│                  npm update check failed                   │
+│            Try running with sudo or get access             │
+│            to the local update config store via            │
+│ sudo chown -R $USER:$(id -gn $USER) /home/gdangelo/.config │
+└────────────────────────────────────────────────────────────┘
+
+
+///////////////SOLO LETTURA FILE AUDIO HUMAN VOICE try1.wav
+
+gdangelo@iitlw1353:~/workspace/R1_Watson.js/car-dashboard (wipWatson)$ npm start
+
+> watson-assistant-car-dashboard@0.1.0 start /home/gdangelo/workspace/R1_Watson.js/car-dashboard
+> node server.js
+
+yarp: Port /ibmjs/text:i active at tcp://10.255.111.92:10007/
+yarp: Port /ibmjs/text:o active at tcp://10.255.111.92:10008/
+yarp: Port /ibmjs/sound:i active at tcp://10.255.111.92:10009/
+yarp: Port /ibmjs/speech_to_text:o active at tcp://10.255.111.92:10010/
+yarp: Port /ibmjs/text_to_speech:i active at tcp://10.255.111.92:10011/
+Yarp Server running on port: 5000
+IBM Server running on port: 4000
+Hi. It looks like a nice drive today. What would you like me to do?  
+connected
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+Message from STT:  "I "
+time:  1531296039704
+Message from Yarp:  "I "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "I "
+time:  1531296040438
+Message from Yarp:  "I "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "I "
+time:  1531296041783
+Message from Yarp:  "I "
+I am having trouble understanding you. Try asking your question in a different way.
+Message from STT:  "I "
+time:  1531296042446
+Message from Yarp:  "I "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "I "
+time:  1531296043484
+Message from Yarp:  "I "
+yarp: Removing input from /sender to /ibmjs/sound:i
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "I "
+time:  1531296044766
+Message from Yarp:  "I "
+I am having trouble understanding you. Try asking your question in a different way.
+Message from STT:  "I "
+time:  1531296045582
+Message from Yarp:  "I "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+^C/ibmjs/text:i
+yarp: Removing input from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Removing output from /ibmjs/speech_to_text:o to /ibmjs/text:i
+/ibmjs/text:o
+yarp: Removing input from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Removing output from /ibmjs/text:o to /ibmjs/text_to_speech:i
+/ibmjs/sound:i
+/ibmjs/speech_to_text:o
+/ibmjs/text_to_speech:i
+
+┌────────────────────────────────────────────────────────────┐
+│                  npm update check failed                   │
+│            Try running with sudo or get access             │
+│            to the local update config store via            │
+│ sudo chown -R $USER:$(id -gn $USER) /home/gdangelo/.config │
+└────────────────────────────────────────────────────────────┘
+
+
+///////////////SOLO LETTURA FILE AUDIO HUMAN VOICE try2.wav
+
+gdangelo@iitlw1353:~/workspace/R1_Watson.js/car-dashboard (wipWatson)$ npm start
+
+> watson-assistant-car-dashboard@0.1.0 start /home/gdangelo/workspace/R1_Watson.js/car-dashboard
+> node server.js
+
+yarp: Port /ibmjs/text:i active at tcp://10.255.111.92:10007/
+yarp: Port /ibmjs/text:o active at tcp://10.255.111.92:10008/
+yarp: Port /ibmjs/sound:i active at tcp://10.255.111.92:10009/
+yarp: Port /ibmjs/speech_to_text:o active at tcp://10.255.111.92:10010/
+yarp: Port /ibmjs/text_to_speech:i active at tcp://10.255.111.92:10011/
+Yarp Server running on port: 5000
+IBM Server running on port: 4000
+Hi. It looks like a nice drive today. What would you like me to do?  
+connected
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+Message from STT:  "yeah "
+time:  1531296386692
+Message from Yarp:  "yeah "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "yeah "
+time:  1531296387575
+Message from Yarp:  "yeah "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "yeah "
+time:  1531296389068
+Message from Yarp:  "yeah "
+yarp: Removing input from /sender to /ibmjs/sound:i
+I am having trouble understanding you. Try asking your question in a different way.
+Message from STT:  "yeah "
+time:  1531296389863
+Message from Yarp:  "yeah "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "yeah "
+time:  1531296391065
+Message from Yarp:  "yeah "
+I'm not sure about that. You can say things like "Turn on my lights" or "Play some music."
+Message from STT:  "yeah "
+time:  1531296391653
+Message from Yarp:  "yeah "
+I am having trouble understanding you. Try asking your question in a different way.
+
+///////////////ACQUISITION - WAV_FILE CREATION - RESPONSE
+
+gdangelo@iitlw1353:~/workspace/R1_Watson.js/car-dashboard (wipWatson)$ npm start
+
+> watson-assistant-car-dashboard@0.1.0 start /home/gdangelo/workspace/R1_Watson.js/car-dashboard
+> node server.js
+
+yarp: Port /ibmjs/text:i active at tcp://10.255.111.92:10007/
+yarp: Port /ibmjs/text:o active at tcp://10.255.111.92:10008/
+yarp: Port /ibmjs/sound:i active at tcp://10.255.111.92:10009/
+yarp: Port /ibmjs/speech_to_text:o active at tcp://10.255.111.92:10010/
+yarp: Port /ibmjs/text_to_speech:i active at tcp://10.255.111.92:10011/
+Yarp Server running on port: 5000
+IBM Server running on port: 4000
+Hi. It looks like a nice drive today. What would you like me to do?  
+connected
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+time OnRead STT:  1531302143781
+I am receiving sound ...
+time OnRead STT:  1531302144768
+I am receiving sound ...
+time OnRead STT:  1531302145755
+I am receiving sound ...
+time OnRead STT:  1531302146749
+I am receiving sound ...
+time OnRead STT:  1531302147781
+Wav file creation ...
+time:  1531302147782
+Wav file created !
+time:  1531302147787
+prima createReadStream
+dopo createReadStream
+time OnRead STT:  1531302148774
+I am receiving sound ...
+yarp: Removing input from /sender to /ibmjs/sound:i
+Message from STT:  "you know "
+time:  1531302150658
+Message from Yarp:  "you know "
+I'm trained to turn things on or off in the car dashboard, play music and find nearby amenities like restaurants, gas stations and restrooms.
+time TTS:  1531302151040
+^C/ibmjs/text:i
+yarp: Removing input from /ibmjs/speech_to_text:o to /ibmjs/text:i
+yarp: Removing output from /ibmjs/speech_to_text:o to /ibmjs/text:i
+/ibmjs/text:o
+yarp: Removing input from /ibmjs/text:o to /ibmjs/text_to_speech:i
+yarp: Removing output from /ibmjs/text:o to /ibmjs/text_to_speech:i
+/ibmjs/sound:i
+/ibmjs/speech_to_text:o
+/ibmjs/text_to_speech:i
+
+┌────────────────────────────────────────────────────────────┐
+│                  npm update check failed                   │
+│            Try running with sudo or get access             │
+│            to the local update config store via            │
+│ sudo chown -R $USER:$(id -gn $USER) /home/gdangelo/.config │
+└────────────────────────────────────────────────────────────┘
+gdangelo@iitlw1353:~/workspace/R1_Watson.js/car-dashboard (wipWatson)$ npm start
+
+> watson-assistant-car-dashboard@0.1.0 start /home/gdangelo/workspace/R1_Watson.js/car-dashboard
+> node server.js
+
+yarp: Port /ibmjs/text:i active at tcp://10.255.111.92:10007/
+yarp: Port /ibmjs/text:o active at tcp://10.255.111.92:10008/
+yarp: Port /ibmjs/sound:i active at tcp://10.255.111.92:10009/
+yarp: Port /ibmjs/speech_to_text:o active at tcp://10.255.111.92:10010/
+yarp: Port /ibmjs/text_to_speech:i active at tcp://10.255.111.92:10011/
+Yarp Server running on port: 5000
+IBM Server running on port: 4000
+Hi. It looks like a nice drive today. What would you like me to do?  
+connected
+yarp: Receiving input from /sender to /ibmjs/sound:i using tcp
+yarp: Receiving input from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Sending output from /ibmjs/speech_to_text:o to /ibmjs/text:i using tcp
+yarp: Sending output from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+yarp: Receiving input from /ibmjs/text:o to /ibmjs/text_to_speech:i using tcp
+time OnRead STT:  1531302597108
+I am receiving sound ...
+time OnRead STT:  1531302598096
+I am receiving sound ...
+time OnRead STT:  1531302599086
+I am receiving sound ...
+time OnRead STT:  1531302600070
+I am receiving sound ...
+time OnRead STT:  1531302601099
+Wav file creation ...
+time:  1531302601100
+Wav file created !
+time:  1531302601105
+prima createReadStream
+dopo createReadStream
+time OnRead STT:  1531302602087
+I am receiving sound ...
+yarp: Removing input from /sender to /ibmjs/sound:i
+Message from STT:  "the music off "
+time:  1531302604140
+Message from Yarp:  "the music off "
+It looks like the music is already off.
+time TTS:  1531302605032
+

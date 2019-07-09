@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Yarp.js & Watson IBM</title>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet'  type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet'  type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'  type='text/css'>
+    <link rel="stylesheet" type="text/css" href="mystyle_examples_https.css">
+    <style type="text/css">
+     /*!
+     * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
+     * Copyright 2013-2016 Start Bootstrap
+     * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+     */
+    html, body {
+        height: 100%;
+    }
+    body {
+        overflow-x: hidden;
+        position: fixed;
+        top:0;
+        width: 100%;
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+     }
+     </style>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class='brand'>
+                <p>
+                    <a href="/" style="text-decoration: none">
+                            Yarp.js &  Watson IBM
+                    </a>
+                </p>
+            </div>
+            <div class="WatsonLogoWrapper" align="center">
+                <a href="/" class="logoWatson"><img src="images/robot.svg"></a>
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+            <div id="description">
+                <h1 align="center">Welcome to <b>Yarp.js</b> with <b> Watson IBM services </b> </h1>
+                <p>
+                    This is a bundle of sample applications that show how <b>YARP</b> can be combined with modern Web tools and APIs using <b>yarp.js</b>.
+                </p>
+                <div class= "WrapperWrapperButtons">
+                    <br><div class="WrapperButton">
+                        <a href="#" class = "yarp-app" id='watson' page-link='documentation'><img src="https://image.flaticon.com/icons/svg/684/684930.svg"><div class="WrapperText"><b>Documentation</b></div></a>
+                    </div>
+                    <br><div class="WrapperButton">
+                        <a class = "Links" href="https://www.example.com"><img src="https://image.flaticon.com/icons/svg/214/214365.svg"><div class="WrapperText"><b>Video Demo</b></div></a>
+                    </div>
+                    <br><div class="WrapperButton">
+                        <a href="#" class = "yarp-app" id='assistant_TTS_SST' page-link='assistant_TTS_SST'><img src="https://image.flaticon.com/icons/svg/874/874553.svg"><div class="WrapperText"><b>Start a new conversation now!</b></div></a>
+                    </div>
+                </div>
+                <p>
+                    <b><font size="5">Note:</font></b> Before starting a new conversation, please, be sure to have a yarp server running on your network!
+                </p>
+            </div>
+            <object id="main-frame" class='invisible'></object>
+            <!-- </div> -->
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+
+        var main_frame = document.getElementById('main-frame');
+
+        // init the links behavior
+        var yarpApps = Array.from(document.getElementsByClassName('yarp-app'));
+
+        yarpApps.deactivate = function deactivate() {
+            yarpApps.map( function _yarpApps_deactivate(yApp) {
+                yApp.classList.remove('selected');
+            });
+        }
+
+        yarpApps.map(function init_yarpApps(yApp) {
+
+            yApp.onclick = function update_iframe() {
+
+                main_frame.classList.remove('invisible')
+                document.getElementById('description').classList.add('invisible');
+
+                yarpApps.deactivate();
+                yApp.classList.add('selected');
+
+                main_frame.setAttribute('data', yApp.getAttribute('page-link') + '/index.html?description=true');
+            };
+
+        });
+
+//    <!-- Menu Toggle Script -->
+
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html>
+<html>
+  <head>
+    <title>yarp.js Speech Recognition Example</title>
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+  </head>
+  <body>
+      <!--div id="capturedimage"></div-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="functions.js" type="text/javascript"></script>
+      <div class='wrapper_cols'>
+            <div id="audio_element"></div>
+            <ul id="messages" class='flex-console'>
+            </ul>
+            <div class='cols'>
+                <table class='yarpibm-commands'>
+                  <tr>
+                      <div class="row">
+                          <div class="col-sm-6" >
+                              <canvas id="canvas-snap_shot" width="320" height="240" class="viewport_snap_shot" align="center">
+                              </canvas>
+                          </div>
+                          <div>
+                              <canvas id="canvas-face-tracker"  width="320" height="240" class="viewport" align="center"></canvas>
+                              <video class='stream-window' id="video" autoplay ></video>
+                          </div>
+                          <div id="ciao"></div>
+                      </div>
+                  </tr>
+                  <tr>
+                      <p align="center"><font size="4" color="cornflowerblue"><b>Open and Connect Yarp ports</b></font></p>
+                      <td align="center">
+                      <form>
+                            <input type="text" class="form-speak" id="text-port-name" placeholder="/yarpjs/text:o" value='/yarpjs/text:o' size="14"><br>
+                            <button id='btn-text' class="ports-button-input" type="button"  data-toggle="button" aria-pressed="false" autocomplete="off">
+                                <i class="fa fa-envelope"  aria-hidden="true"></i><br>Text Port
+                            </button>
+                        </form>
+                      <td align="center">
+                          <form>
+                            <input type="text" class="form-speak" id="sound-port-name" placeholder="/yarpjs/sound:o" value='/yarpjs/sound:o' size="14"><br>
+                            <button id='btn-sound' class="ports-button-input" type="button"  data-toggle="button" aria-pressed="false" autocomplete="off">
+                                <i class="fa fa-music"  aria-hidden="true"></i><br>Sound Port
+                            </button>
+                        </form>
+                      </td>
+                      <td align="center">
+                          <form>
+                            <input type="text" class="form-speak" id="img-port-name" placeholder="/yarpjs/img:o" value='/yarpjs/img:o' size="14"><br>
+                            <button id='btn-img' class="ports-button-input" type="button"  data-toggle="button" aria-pressed="false" autocomplete="off">
+                                <i class="fa fa-image"  aria-hidden="true"></i><br>Image Port
+                            </button>
+                          </form>
+                      </td>
+                  </tr>
+                  <tr align="center">
+                      <td style="padding: 0px 15px 20px;">
+                          <form action = "" id='form-speech-synthesis' class="form-inline" >
+                            <input type="text" id="input-TextToIBM" class="form-speak" placeholder="Hello Watson!" value='Hello Watson!' size="12" onkeydown="MsgToIBM_EnterClick(event, this)">
+                          </form>
+                      </td>
+                      <td align="center">
+                          <form action = "" id='form-speech-synthesis' class="form-inline" style="margin-bottom: 1em">
+                            <button id='btn-TextToIBM' type="button" class="btn btn-primary yarp-btn" onClick="MsgToIBM_OnClick()" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                <i class="fa fa-envelope fa-fw" style='margin-right:0.3em' aria-hidden="true"></i>Robot Texting Watson
+                            </button>
+                          </form>
+                      </td>
+                  </tr>
+                  <tr align="center">
+                      <td>
+                          <div id="input-mic">
+                              <i class="fa fa-microphone fa-3x" style='margin-right: 0.3em' aria-hidden="true"></i>
+                          </div>
+                      </td>
+                      <td align="center">
+                          <form action = "" id='form-speech-synthesis' class="form-inline" style="margin-bottom: 1em">
+                              <button id='btn-speak-Watson' type="button" class="yarp-btn btn" onClick="toggleVoiceBTN(this)" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                  <i class="fa fa-microphone-slash fa-fw" style='margin-right:0.3em' aria-hidden="true"></i>Voice Recognition Watson
+                            </button>
+                          </form>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td align="center">
+                          <div>
+                              <i class="fa fa-user fa-3x"></i>
+                          </div>
+                      </td>
+                      <td align="center">
+                          <form action = "" id='form-speech-synthesis' class="form-inline" style="margin-bottom: 1em">
+                            <button id='btn-img' type="button" class="btn btn-primary yarp-btn" onClick="toggleVisualBTN(this)" data-toggle="button" aria-pressed="false" autocomplete="off">
+                              <i class="fa fa-eye" style='margin-right:0.3em' aria-hidden="true"></i>Visual Recognition Watson
+                            </button>
+                        </form>
+                      </td>
+                  </tr>
+                </table>
+         </div>
+      </div>
+      <!--audio controls autoplay  style="display:none">
+          <source src="intro.wav" type="audio/wav">
+              Your browser does not support the audio element.
+      </audio-->
+  </body>
+  <script src="/jquery/dist/jquery.min.js"></script>
+  <script src="IBM_templates.js"></script>
+  <script src="/yarp.js"></script>
+
+
+  <script>
+
+    // Get access to the camera!
+    var video = document.getElementById('video');
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Not adding `{ audio: true }` since we only want video now
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+            video.srcObject=stream;
+            video.play();
+        });
+    }
+    // Server-client initialization, yarp socket
+    var socket = io();
+    yarp.init(socket);
+
+    var initial_msg='Hi! I am Watson, your personal assistant. '+
+                    'Just open and connect the Yarp ports to start a conversation with me ! '+
+                    '<br> I look forward to hearing from you :)'+
+                    '<br><br> <b>Robot Texting Watson:</b> Exchange text messages with Watson. '+
+                    '<br><br> <b>Voice Recognition Watson:</b> Speech to text recognition.'+
+                    '<br><br> <b>Visual Recognition Watson:</b> Take a snapshot and ask Watson to recognize what\'s inside.'+
+                    '';
+    $('#messages').append('<li><samp class="initial-reply-from-server">$><b>Welcome from Watson:</b><br>'+initial_msg+'</samp></li><br>');
+
+
+    //Open and Connect New Yarp Ports OUTPUTS (initial ports)
+    var yarp_text_port_sender=yarp.PortHandler.openPort('/yarpjs/text:o');
+    var yarp_sound_port_sender=yarp.PortHandler.openPort('/yarpjs/sound:o','sound');
+    var yarp_img_port_sender=yarp.PortHandler.openPort('/yarpjs/img:o','bottle');
+
+    //Open and Connect New Yarp Ports INPUTS (initial ports)
+    var yarp_text_port_receiver=yarp.PortHandler.openPort('/yarpjs/text:i');
+    var yarp_sound_port_receiver=yarp.PortHandler.openPort('/yarpjs/sound:i','sound');
+    var yarp_img_port_receiver=yarp.PortHandler.openPort('/yarpjs/img:i','bottle');
+
+    // What to do as soon as the yarp module is ready
+    yarp.onInit(function() {
+
+        //Connect internal IBM ports
+        yarp.Network.connect("/ibmjs/speech_to_text:o", "/ibmjs/text:i");
+        yarp.Network.connect("/ibmjs/text:o", "/ibmjs/text_to_speech:i");
+        yarp.Network.connect("/ibmjs/audio_play:o", "/ibmjs/audio_play:i");
+
+        //Open and Connect New Yarp Ports
+        document.querySelector('#btn-text').onclick = function () {
+            var text_port_name=document.getElementById("text-port-name").value;
+            var yarp_text_port_sender = yarp.PortHandler.openPort(text_port_name);
+            yarp.Network.connect(text_port_name,'/ibmjs/text:i');
+            yarp.Network.connect('/ibmjs/text:o', '/yarpjs/text:i');
+
+        };
+
+        document.querySelector('#btn-sound').onclick = function () {
+            var sound_port_name=document.getElementById("sound-port-name").value;
+            var yarp_sound_port_sender = yarp.PortHandler.openPort(sound_port_name);
+            yarp.Network.connect(sound_port_name,'/ibmjs/sound:i');
+            yarp.Network.connect('/ibmjs/speech-to-text:o', '/yarpjs/speech-to-text:i');
+        };
+
+        document.querySelector('#btn-img').onclick = function () {
+            var img_port_name=document.getElementById("img-port-name").value;
+            var yarp_img_port_sender = yarp.PortHandler.openPort(img_port_name);
+            yarp.Network.connect(img_port_name,'/ibmjs/img:i');
+            yarp.Network.connect('/ibmjs/text:o', '/yarpjs/img:i');
+        };
+
+        yarp_text_port_receiver.onRead(function(msg)
+        {
+            var Messages = '';
+            for(var i=0; i<msg.content.length; i++)
+            {
+                Messages += msg.content[i] + ' ';
+            }
+            $('#messages').append('<li><samp class="reply-from-server-text">$><b>Message from Watson:</b><br>'+Messages+'</samp></li><br>');
+
+            SynthetizeAPI(msg);
+        })
+
+        yarp_sound_port_receiver.onRead(function(msg)
+        {
+            var Messages = '';
+            for(var i=0; i<msg.content.length; i++)
+            {
+                Messages += msg.content[i] + ' ';
+            }
+
+            setTimeout(function()
+            {
+                $('#messages').append('<li><samp class="reply-from-server">$>Messages from IBM:<br>'+Messages+'</samp></li><br>');
+
+            }, 3000);
+
+        })
+
+        yarp_img_port_receiver.onRead(function(msg)
+        {
+            var Messages = '';
+            for(var i=0; i<msg.content.length; i++)
+            {
+                Messages += msg.content[i] + ' ';
+            }
+            $('#messages').append('<li><samp class="reply-from-server">$>Messages from IBM:<br>'+Messages+'</samp></li><br>');
+        })
+
+    });
+
+
+    // Functions with ports
+        function MsgToIBM_OnClick(msg)
+        {
+            var msg = $('#input-TextToIBM').val();
+            console.log(msg);
+            yarp_text_port_sender.write(msg);
+            $('#input-TextToIBM').val('');
+
+       }
+
+        function MsgToIBM_EnterClick(event, msg)
+        {
+            var msg = $('#input-TextToIBM').val();
+            if (event.keyCode === 13)
+            {
+                yarp_text_port_sender.write(msg);
+                $('#input-TextToIBM').val('');
+            }
+        }
+
+        function toggleVisualBTN(el)
+        {
+            // Elements for taking the snapshot
+            var canvas = document.getElementById('canvas-snap_shot');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+
+            // Trigger photo take
+            context.drawImage(video, 0, 0, 320, 240);
+            image=document.getElementById('canvas-snap_shot');
+            //var img = document.createElement("img");
+            var imgData = context.getImageData(0, 0, 320, 240);
+            var uint8 = new Uint8Array(imgData.data.length);
+            console.log('img',imgData.data);
+
+            for(var j = 0; j < (imgData.data.length); j++)
+            {uint8.set([imgData.data[j]],j);}
+
+
+            yarp_img_port_sender.write(uint8);
+            console.log('giulia00');
+
+        }
+
+</script>
+
+<script>
+/*
+     -----------------------> PREVIOUS VERSION
+    //OPENING PORTS
+
+    //SPEECH SYNTHESIS
+    var yarp_speech_receiver_port = yarp.PortHandler.openPort('/yarp_speech/receiver:o'); // open port sending out recognized speech
+    var yarp_speech_speak_port = yarp.PortHandler.openPort('/yarp_speech/speak:i'); // open port for receiving messages to produce
+
+    //TEXT MESSAGES
+    var yarp_write_text_port = yarp.PortHandler.openPort('/yarp_text/sender:o');
+    var yarp_read_text_port = yarp.PortHandler.openPort('/yarp_text/receiver:i');
+
+    //SOUND MESSAGES
+    var yarp_read_sound_port = yarp.PortHandler.openPort('/receiver','sound');
+
+    var acquisition_period = 10;
+    var sample_rate = 16000;
+    var num_seconds = 1;
+    var bit_depth = 16;
+    var num_samples = sample_rate*num_seconds;
+    var num_channels = 1;
+
+
+    var uint8 = new Uint8Array((num_samples*2)*acquisition_period);
+    var i = 0;
+    var stop = false;
+
+
+
+    // what to do as soon as the yarp module is ready
+    yarp.onInit(function() {
+
+
+      //PORTS CONNECTION
+
+      yarp.Network.connect('/yarp_text/sender:o','/ibm_text/receiver:i');
+      yarp.Network.connect('/ibm_text/sender:o','/yarp_text/receiver:i');
+
+      yarp.Network.connect('/sender','/receiver');
+
+      //COMMUNICATION PROCESSING
+
+      //SPEECH SYNTHESIS
+      // set the action to perform after speech recognition
+      yarp.Recognizer.addEventListener('yarp speech finished', function (e) {
+          $('#messages').append('<li><samp>$> Recognized: '+e.detail[0].transcript+'</samp></li>');
+          yarp_speech_receiver_port.write(e.detail[0].transcript);
+        }, false);
+      yarp.Recognizer.enableAutorestart();
+      yarp.Recognizer.stop(); // begin session with speech recognition off
+
+      yarp_speech_speak_port.onRead(function(msg){
+        speakAndWrite(msg.content);
+      })
+
+      $("#form-speech-synthesis").submit(function(e){
+        e.preventDefault();
+        speakBTN();
+      });
+
+      //TEXT MESSAGES
+      yarp_read_text_port.onRead(function(msg)
+      {
+          var Messages = '';
+          for(var i=0; i<msg.content.length; i++)
+          {
+              Messages += msg.content[i] + ' ';
+          }
+          $('#messages').append('<li><samp class="reply-from-server">$>Messages from IBM:<br>'+Messages+'</samp></li><br>');
+      })
+
+      //SOUND MESSAGES
+      yarp_read_sound_port.onRead(function(msg)
+      {
+          if (!stop)
+          {
+              var view = new DataView(msg.content);
+              for(var j = 0; j < (num_samples*2); j++ )
+              {uint8.set([view.getUint8(j)],j + i*(num_samples*2));}
+              if(i == (acquisition_period - 1))
+              {
+                  var file_content = getData(uint8, sample_rate);
+                  download(file_content);
+                  stop = true;
+              }
+              i++;
+          }
+      })
+
+  });
+
+      //TEXT MESSAGES
+      function MsgToIBM_OnClick(msg)
+      {
+          var msg = $('#send-message-text').val();
+          yarp_write_text_port.write(msg);
+          $('#send-message-text').val('');
+
+     }
+
+      function MsgToIBM_EnterClick(event, msg)
+      {
+          var msg = $('#send-message-text').val();
+          if (event.keyCode === 13)
+          {
+              yarp_write_text_port.write(msg);
+              $('#send-message-text').val('');
+          }
+      }
+*/
+
+</script>
+</html>

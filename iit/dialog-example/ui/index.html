@@ -1,0 +1,231 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="/yarp.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="copyright" content="Copyright © 2016 I.B.M. All rights reserved.
+
+         Licensed under the Apache License, Version 2.0 (the “License”);
+         you may not use this file except in compliance with the License.
+         You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+         Unless required by applicable law or agreed to in writing, software
+         distributed under the License is distributed on an “AS IS” BASIS,
+         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+         See the License for the specific language governing permissions and
+         limitations under the License.">
+    <meta name="description" content="Watson Conversation Service Car Dashboard Sample Application">
+    <title>Watson Assistant Service Car Dashboard Sample Application</title>
+    <!-- build:css css/main.min.css -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/tooltip-dialogs.css">
+    <link rel="stylesheet" type="text/css" href="css/conversation.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="css/weather.css">
+    <link rel="stylesheet" type="text/css" href="css/font.css">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <!-- endbuild -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ct" content="vPWQz9kc-2sDXDdB6m_K5RLm_mwStA0c3cyo">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <section>
+        <h1>Transcribe and Play user-provided File</h1>
+        <input type="file" id="audiofile"> <button id="button">Transcribe and Play</button> <button id="stop">Stop</button>
+
+        <h2>Output:</h2>
+        <div id="output">--</div>
+    </section>
+
+    <section>
+        <h1>Transcribe File via URL</h1>
+        <button id="buttonPlay">Play and Transcribe</button>
+
+        <h2>Output:</h2>
+        <div id="outputPlay">--</div>
+    </section>
+
+    <section>
+        <h1>Basic Text to Speech Example</h1>
+        <textarea id="textTTS" rows="6" cols="80">Hello from IBM Watson</textarea>
+        <p><button id="buttonTTS">Synthesize Text</button></p>
+    </section>
+
+    <section>
+        <h1>Basic Text to Speech File Example</h1>
+        <textarea id="textTTSfile" rows="6" cols="80">Hello Yarp</textarea>
+        <p><button id="buttonTTSfile">Get Audio File</button></p>
+    </section>
+
+
+    <div id="dark-overlay" class="overlay"></div>
+    <div id="clear-overlay" class="overlay"></div>
+    <!--The main car dashboard SVG-->
+    <div id="svg_wrapper">
+        <div id="output-audio" class="audio-on" onclick="TTSModule.toggle()" value="ON"></div>
+        <button id="help" class="tooltip-dialog-btn" onclick="Sidebar.toggle()">What can I ask?</button>
+        <div id="svg_size">
+            <svg id="svg_canvas" viewBox="0 0 1024 704" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+        <div class="chatUi">
+            <div id="chat-scroll-wrapper"><div id="chat-flow"></div></div>
+            <div id="input-wrapper" class="responsive-columns-wrapper">
+                <div id="input-mic-holder">
+                    <div id="input-mic" class="inactive-mic" onclick="STTModule.micON()"></div>
+                </div>
+
+                <label for="user-input" class="input-outline responsive-column">
+                  <input id="user-input" type="text" placeholder="Type something, e.g. “Turn the headlights on”" >
+                </label>
+            </div>
+        </div>
+        <div id="tooltip-dialog-list"></div>
+        <div id="sidebar">
+            <div class="close-div" onclick="Sidebar.toggle()">
+                <img src="images/close-button.png" class="close" alt="close" />
+            </div>
+            <p class="pre-bar">I’m trained on these topics:</p>
+            <ul id="suggestion-list"></ul>
+        </div>
+    </div>
+    <script>
+        // For cloaking. Done in JS for the case of disabled JS (i.e. even though not much will work, something will be displayed.)
+        document.body.style.visibility = 'hidden';
+    </script>
+    <script src="js/libs/snap.svg.js"></script>
+    <script src="./../node_modules/whatwg-fetch/fetch.js"></script>
+    <script src="functions.js" type="text/javascript"></script>
+    <script src="js/common.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/tooltip-dialogs.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/panel.js"></script>
+    <script src="js/conversation.js"></script>
+    <script src="js/conversationResponse.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/ui_tests/tests.js"></script>
+    <!-- endbuild -->
+    <script src="ibm/watson-speech.min.js"></script>
+    <script src="ibm/speech-to-text.js"></script>
+    <script src="ibm/speech-to-text-file.js"></script>
+    <script src="ibm/speech-to-text-file-PlayTrascribe.js"></script>
+    <script src="ibm/text-to-speech.js"></script>
+    <script src="ibm/synthesis.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Initialization of socket.io and yarp.js -->
+    <script>
+      var socket = io();
+      yarp.init(socket);
+    </script>
+
+    <script>
+
+      // Message IBM open ports for writing/reading text messages
+      var ibm_write_text_port = yarp.PortHandler.openPort('/ibm_text/sender:o');
+      var ibm_read_text_port = yarp.PortHandler.openPort('/ibm_text/receiver:i');
+
+      // open Yarp Sound Port
+      //var ibm_read_sound_port = yarp.PortHandler.openPort('/ibm_sound/sender:o','sound');
+      var ibm_read_sound_port = yarp.PortHandler.openPort('/ibm_sound/receiver:i','sound');
+
+      // open Yarp Synthesis port
+      var write_text_wavfile = yarp.PortHandler.openPort('/text_wavfile');
+
+      // Sound IBM parameters
+      var acquisition_period = 10;
+      var sample_rate = 16000;
+      var num_seconds = 1;
+      var bit_depth = 16;
+      var num_samples = sample_rate*num_seconds;
+      var num_channels = 1;
+
+      var uint8 = new Uint8Array((num_samples*2)*acquisition_period);
+      var i = 0;
+      var stop = false;
+
+      yarp.onInit(function()
+      {
+          yarp.Network.connect('/text_wavfile','/ibmjs/text_to_speech:i');
+          yarp.Network.connect('/sender','/ibm_sound/receiver:i');
+
+          // Text Messages OnRead
+          ibm_read_text_port.onRead(function(msg)
+          {
+              var Messages = '';
+              for( var i=0; i<msg.content.length; i++)
+              {
+                  Messages += msg.content[i] + ' ';
+              }
+              $('#user-input').val(Messages);
+              Conversation.sendMessage();
+              $('#user-input').val('');
+
+          })
+
+          // Text Messages Write
+          var currentResponsePayloadSetter = Api.setWatsonPayload;
+          Api.setWatsonPayload = function(payload) {
+            currentResponsePayloadSetter.call(Api, payload);
+            var Msg = payload.output.text;
+            MsgToYARP(Msg);
+          };
+
+          // Sound Messages OnRead
+          ibm_read_sound_port.onRead(function(msg)
+          {
+              if (!stop)
+              {
+                  var view = new DataView(msg.content);
+                  for(var j = 0; j < (num_samples*2); j++ )
+                  {uint8.set([view.getUint8(j)],j + i*(num_samples*2));}
+                  if(i == (acquisition_period - 1))
+                  {
+                      var file_content = getData(uint8, sample_rate);
+                      download(file_content);
+                      stop = true;
+                  }
+                  i++;
+              }
+          })
+      });
+
+      function MsgToYARP(msg)
+      {
+          ibm_write_text_port.write(msg);
+      }
+
+      document.querySelector('#button').onclick = function () {
+          var audio = STTfileModule.STTfile();
+      };
+
+      document.querySelector('#stop').onclick = function() {
+          STTfileModule.STTfile_stop();
+      }
+
+      document.querySelector('#buttonPlay').onclick = function () {
+          STTfilePlayModule.PlayTranscribe();
+      };
+
+      document.querySelector('#buttonTTS').onclick = function () {
+          var audio = synthesisModule.synthesis();
+      };
+
+      document.querySelector('#buttonTTSfile').onclick = function () {
+          var text  = document.querySelector('#textTTSfile').value;
+          write_text_wavfile.write(text);
+      };
+    </script>
+
+</body>
+</html>

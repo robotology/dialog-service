@@ -1,0 +1,272 @@
+
+/* Toggle Styles */
+
+#wrapper {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    height: 100%;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 4.3em;
+    background: cornflowerblue;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(0, 0, 0, 0.4);
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: relative;
+
+    top: -4.3em;
+    padding-top: 4.3em;
+    height: 100%;
+
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding-right: 1em;
+    padding-top: 1em;
+}
+
+
+.brand {
+    position: fixed;
+/*    margin-bottom: 1em;*/
+}
+
+.sidebar-nav > .sidebar-brand, .brand{
+    height: 20%;
+    line-height: 60px;
+    padding-left: 1em;
+}
+
+
+.sidebar-nav > .sidebar-brand img {
+    height: 1em;
+}
+.brand p{
+    margin-bottom: 0px;
+}
+.brand p a {
+    font-family: 'Courier', serif;
+    top: 10%;
+    font-size: 2.5em;
+    font-weight: normal;
+    color:white;
+}
+
+
+@media(min-width:768px) {
+
+    #wrapper {
+        padding-left: 0;
+        height: 100%;
+    }
+
+    #sidebar-wrapper {
+        position: fixed;
+        top: 0;
+        left: 250px;
+        width: 0;
+        height: 100%;
+        margin-left: -250px;
+        overflow-y: auto;
+    }
+
+    #page-content-wrapper {
+        position: absolute;
+        top:0;
+        padding-top:0;
+    }
+
+    /* Sidebar Styles */
+
+    .brand {
+        position: static;
+        margin-bottom: 0px;
+    }
+
+
+    .sidebar-nav {
+
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+
+        position: static;
+        top: 0;
+        width: 250px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .sidebar-nav > .sidebar-brand {
+        height: 65px;
+        line-height: 60px;
+    }
+
+    .sidebar-nav > .sidebar-brand img {
+        height: 1em;
+    }
+
+    .sidebar-nav > .sidebar-brand a {
+        font-family: 'Courier', serif;
+        /*font-family: 'Arvo', serif;*/
+        /*font-family: 'Josefin Slab', serif;*/
+        font-size: 3em;
+
+        font-weight: normal;
+
+        color:white;
+    }
+
+    .sidebar-nav > .sidebar-brand a:hover {
+        color: #fff;
+        background: none;
+    }
+
+
+
+
+}
+
+    @media(min-width:768px) {
+        #wrapper {
+            padding-left: 250px;
+        }
+
+        #wrapper.toggled {
+            padding-left: 0;
+        }
+
+        #sidebar-wrapper {
+            width: 250px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            width: 0;
+        }
+
+        #page-content-wrapper {
+            position: relative;
+        }
+
+        #wrapper.toggled #page-content-wrapper {
+            position: relative;
+            margin-right: 0;
+        }
+
+        .logoWatson {
+          display: block;
+          top: 50%;
+          transform:translate(0,-80%);
+          width: 100%;
+          height: 30%;
+          position: absolute;
+        }
+
+        .logoWatson img{
+          height: 100%;
+          width: 100%;
+        }
+
+        .WatsonLogoWrapper
+        {
+            height: 80%;
+            width: 100%;
+            position:relative;
+        }
+
+    }
+
+    @media(max-width:768px) {
+        .logoWatson {
+          display: none;
+        }
+    }
+
+    #main-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .invisible {
+        display: none;
+    }
+
+
+    #description {
+        padding: 3em;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+
+    #description p {
+        font-size: 1.3em;
+        margin-top: 3em;
+        text-align: center;
+
+    }
+
+    #description b {
+        font-weight: bold;
+        color: cornflowerblue;
+    }
+
+    #description h1 b {
+        font-family: 'Courier', serif;
+    }
+
+
+
+    .WrapperWrapperButtons {
+        width: 100%;
+    }
+    .WrapperButton {
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .WrapperText {
+        width: 70%;
+        text-align: center;
+        display: inline-block;
+    }
+
+
+    .Links img {
+        width: 30%;
+    }
+
+    .yarp-app img {
+        width: 30%;
+    }

@@ -1,0 +1,15 @@
+curl -X POST -u cdaee4f4-7d66-48a9-ac15-431c55de2b18:lDEwbqFTFkDm \
+--header "Content-Type: giulia_new/wav" \
+--data-binary @giulia_new.wav \
+"https://stream.watsonplatform.net/speech-to-text/api/v1/recognize"
+
+curl -X POST -u cdaee4f4-7d66-48a9-ac15-431c55de2b18:lDEwbqFTFkDm \
+--header "Content-Type: audio/flac" \
+--data-binary @audio-file.flac \
+"https://stream.watsonplatform.net/speech-to-text/api/v1/recognize"
+
+
+curl -X POST -u cdaee4f4-7d66-48a9-ac15-431c55de2b18:lDEwbqFTFkDm \
+--header "Content-Type: giulia/wav" \
+--data-binary @giulia.wav \
+"https://stream.watsonplatform.net/speech-to-text/api/v1/recognize"

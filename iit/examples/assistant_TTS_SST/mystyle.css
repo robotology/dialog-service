@@ -1,0 +1,145 @@
+
+   .flex-console {
+      width: 37%;
+      height: 97%;
+      flex-grow: 2;
+      flex-shrink: 0;
+      overflow: auto;
+      background-color: #777;
+      color: green;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-content: flex-end;
+      align-items: flex-start;
+      position: absolute; right: 0;
+      padding: 0;
+      padding-bottom: 0em;
+      padding-top: 1em;
+      border: 20px solid #777 ;
+  }
+
+  .initial-reply-from-server
+  {
+      color: white;
+  }
+
+  .reply-from-server-text
+  {
+      color: rgb(10, 10, 10);;
+  }
+
+  .btn
+  {
+    font-size: 1.5em;
+  }
+
+  .ports-button-input
+  {
+    font-size: 1.1em;
+    font-family: 'Courier' serif;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+    width: 120px;
+    height: 60px;
+  }
+
+  .form-speak
+  {
+      border-radius: 4px;
+  }
+
+  .invisible {
+      display: none;
+  }
+
+  #description {
+      padding: 3em;
+  }
+
+  #description * {
+      text-align: center;
+  }
+
+  #description p {
+      font-size: 1.3em;
+      margin-top: 3em;
+      text-align: center;
+  }
+
+  #description b {
+      font-weight: bold;
+      color: cornflowerblue;
+  }
+
+  #description h1 b {
+      font-family: 'Courier', serif;
+  }
+
+  #description p.danger {
+      margin: 0;
+      color: crimson;
+  }
+
+  #canvas-face-tracker {
+    position: absolute;
+    z-index: 100;
+    width: 320px;
+    height:240px;
+  }
+
+  #canvas-snap_shot {
+    align:left;
+    width: 320px;
+    height:240px;
+  }
+
+  .stream-window {
+  border-radius: 10%;
+  border: 0.5em solid #D4D6D8;
+  box-shadow: 4px 4px 10px -3px rgba(0, 0, 0, 0.5);
+  height: 240px;
+  width: 322px;
+  }
+
+   form {
+   margin-top: 1em;
+   margin-bottom: 0;
+   font-size: 1em;
+   }
+
+   .wrapper_cols{
+       width: 100%;
+       height: 100%;
+   }
+
+   .cols{
+       width: 60%;
+       height: 100%;
+       margin-right: 2%;
+   }
+
+  .yarp-btn {
+      width: 100%;
+  }
+
+  .yarpibm-commands
+  {
+      width: 100%;
+      align: left;
+  }
+  .viewport
+  {
+     margin-top: 1%;
+     margin-left: 40%;
+
+  }
+  .viewport_snap_shot
+  {
+     margin-left: 30%;
+     border-radius: 10%;
+     border: 0.5em solid #D4D6D8;
+  }

@@ -1,0 +1,239 @@
+<h1 id="watson-assistant-application-with-yarp-js-">Watson Assistant Application with yarp.js.</h1>
+<p>Watson Assistant Application on IBM Cloud is connected to <a href="http://www.yarp.it/">YARP</a> server via ports through yarp.js (a JavaScript set of bindings for YARP).</p>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#SetUpYourSystem">Set up your system</a><ul>
+<li><a href="#WatsonAssChat">Watson Assistant Chat</a><ul>
+<li><a href="#BeforeBegin">Before you begin</a><ul>
+<li><a href="#InstallLocally">Installing locally</a></li>
+<li><a href="#SettingUpWatson">Setting up the Watson Assistant service</a></li>
+<li><a href="#Importing">Importing the Watson Assistant workspace</a></li>
+<li><a href="#ConfEnvirApp">Configuring the app environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#InstallStartApp">Installing and starting the app</a></li>
+<li><a href="#DeployingApp">Deploying to IBM Cloud</a><ul>
+<li><a href="#Troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li><a href="#License">License</a></li>
+</ul>
+<p><a name='introduction'></a></p>
+<h1 id="introduction">Introduction</h1>
+<p>This example shows how to create a conversational application sending data through Yarp ports. The conversational application is made by creating a dialog tree with IBM Watson Assistant service.
+The example on yarp.js is:</p>
+<ul>
+<li><a href="https://github.com/vtikha/IBM-IIT/tree/master/yarp.js/examples/message_ibm">Message IBM</a></li>
+</ul>
+<p>The yarp.js interface contains other examples:</p>
+<ul>
+<li><a href="https://github.com/vtikha/IBM-IIT/tree/master/yarp.js//examples/speech_recognition">Speech Recognition and Synthesis</a></li>
+<li><a href="https://github.com/vtikha/IBM-IIT/tree/master/yarp.js//examples/inertial_data">Transmitting Inertial Data</a></li>
+<li><a href="https://github.com/vtikha/IBM-IIT/tree/master/yarp.js//examples/point_cloud">Visualization with WebGL - Point Cloud</a></li>
+<li><a href="https://github.com/vtikha/IBM-IIT/tree/master/yarp.js//examples/stream_audio">Stream Audio</a></li>
+<li><a href="https://github.com/vtikha/IBM-IIT/tree/master/yarp.js//examples/stream_video">Stream Video (a yarpview with yarp.js)</a></li>
+<li><a href="https://github.com/vtikha/IBM-IIT/tree/master/yarp.js//examples/face_tracker">Face Tracking (and &quot;Teleoperation&quot;!)</a></li>
+</ul>
+<p><a name='SetUpYourSystem'></a></p>
+<h1 id="set-up-your-system">Set up your system</h1>
+<p><strong>Client dependencies (on any device on your network)</strong>:</p>
+<ul>
+<li><a href="https://www.google.com/chrome/">Google Chrome</a></li>
+<li><a href="https://www.mozilla.org/en-US/firefox/products/">Firefox</a></li>
+</ul>
+<p><strong>Server dependencies</strong>:</p>
+<ul>
+<li><a href="https://github.com/robotology/yarp">YARP</a> (Duh!). With OpenCV!</li>
+<li><a href="https://nodejs.org/en/">node.js</a>. Version &gt;= 4.2.2. Follow the <a href="https://nodejs.org/en/download/package-manager/">official guide</a>.</li>
+</ul>
+<p><strong>Note</strong>:</p>
+<ul>
+<li><strong>Please make sure</strong> that your Node version is &gt;= 4.2.2</li>
+<li><strong>Linux</strong>. If you installed Node.js from the package manager, it could happen that the command <code>node</code> is not in your path, but rather <code>nodejs</code> is. To this end, run <code>$&gt; sudo ln -s /usr/bin/nodejs /usr/bin/node</code>.</li>
+</ul>
+<p>Once you have all dependencies installed, go to the folder where you have cloned this repository and run:</p>
+<pre><code>$&gt; sudo npm install
+$&gt; ./node_modules/cmake-js/bin/cmake-js</code></pre><p><strong>Optional</strong>: although the command <code>sudo npm install</code> installs the node dependencies <em>locally</em>, it needs administrative permissions. If you want to avoid this (and just use <code>npm install</code>), follow the <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions">official npm guide</a>. This is not required to use yarp.js though.</p>
+<p><a name='WatsonAssChat'></a></p>
+<h2 id="watson-assistant-chat">Watson Assistant Chat</h2>
+<p><a href="https://console.bluemix.net/docs/services/conversation/getting-started.html#gettingstarted">IBM Watson™ Assistant</a> allows the conversation flow with an end user by using intents, entities and dialog nodes in a simple chat interface. With the IBM Watson™ Assistant service, you can build a solution that understands natural-language input and uses machine learning to respond to users in a way that simulates a conversation between humans.</p>
+<p>This Node.js app demonstrates the Watson Assistant service in a simple chat interface simulating a natural conversation.</p>
+<p><a name='BeforeBegin'></a></p>
+<h3 id="before-you-begin">Before you begin</h3>
+<ul>
+<li>Create an IBM Cloud account<ul>
+<li><a href="https://console.ng.bluemix.net/registration/?target=/catalog/%3fcategory=watson">Sign up</a> in IBM Cloud, or use an existing account. Your account must have available space for at least 1 app and 1 service.</li>
+</ul>
+</li>
+<li><p>Make sure that you have the following prerequisites installed:</p>
+<ul>
+<li>The <a href="https://nodejs.org/#download">Node.js</a> runtime, including the [npm][npm_link] package manager</li>
+<li><p>The <a href="https://github.com/cloudfoundry/cli">Cloud Foundry</a> command-line client</p>
+<p>Note: Ensure that you Cloud Foundry version is up to date</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><a name='InstallLocally'></a></p>
+<h4 id="installing-locally">Installing locally</h4>
+<p>If you want to modify the app or use it as a basis for building your own app, install it locally. You can then deploy your modified version of the app to IBM Cloud (<a href="#DeployingApp">Deploying to IBM Cloud</a>).</p>
+<p><a name='SettingUpWatson'></a></p>
+<h4 id="setting-up-the-watson-assistant-service">Setting up the Watson Assistant service</h4>
+<p>You can use an exisiting instance of the Watson Assistant service. Otherwise, follow these steps.</p>
+<ol>
+<li><p>At the command line, go to the local project directory (<code>yarp.js/WatsonAssistant</code>).</p>
+</li>
+<li><p>Connect to IBM Cloud with the Cloud Foundry command-line tool (Cloud Foundry <a href="https://docs.cloudfoundry.org/">documentation</a>). For more information, see the Watson Developer Cloud <a href="https://console.bluemix.net/developer/watson/documentation">documentation</a>.</p>
+<pre><code class="language-bash"> cf login</code></pre>
+</li>
+<li><p>Enter your Cloud Foundry credentials:</p>
+<pre><code class="language-bash"> Email&gt; YourMail@example.com
+
+ Password&gt; YourPassword</code></pre>
+<p> You should be able to see this kind of outcome:</p>
+<pre><code class="language-bash"> Authenticating...
+ OK
+
+ Targeted org YourMail@example.com
+
+ Targeted space dev
+
+ API endpoint:   https://api.eu-gb.bluemix.net (API version: 2.92.0)
+ User:           YourMail@example.com
+ Org:            YourMail@example.com
+ Space:          dev</code></pre>
+</li>
+<li><p>Create an instance of the Watson Assistant service in IBM Cloud (our CLI is being updated, for now, use the <code>create-service</code> conversation command). For example:</p>
+<pre><code class="language-bash"> cf create-service conversation free my-watson-assistant-service</code></pre>
+<p><a name='Importing'></a></p>
+<h4 id="importing-the-watson-assistant-workspace">Importing the Watson Assistant workspace</h4>
+</li>
+<li><p>In your browser, navigate to your <a href="https://console.ng.bluemix.net/dashboard/apps">IBM Cloud console</a>.</p>
+</li>
+<li><p>From the <strong>All Items</strong> tab, click the newly created Watson Assistant service <strong>&quot;my-watson-assistant-service&quot;</strong> in the <strong>Services</strong> list.</p>
+<p> <img src="WatsonAssistant/readme_images/conversation_service.png" alt="Screen capture of Services list"></p>
+</li>
+<li><p>On the Service Details page, click <strong>Launch tool</strong>.</p>
+</li>
+<li><p>Click the <strong>Import workspace</strong> icon in the Watson Assistant service tool. Specify the location of the workspace JSON file in your local copy of the app project:</p>
+<p> <code>&lt;project_root&gt;/WatsonAssistant/training/Yarp-IBM.json</code></p>
+</li>
+<li><p>Select <strong>Everything (Intents, Entities, and Dialog)</strong> and then click <strong>Import</strong>. The car dashboard workspace is created.</p>
+</li>
+</ol>
+<p><a name='ConfEnvirApp'></a></p>
+<h4 id="configuring-the-app-environment">Configuring the app environment</h4>
+<ol>
+<li><p>Show hidden files (Ctrl+H) and search for <code>.env.example</code> file.</p>
+</li>
+<li><p>Copy or rename the <code>.env.example</code> file to <code>.env</code> (nothing before the dot).</p>
+</li>
+<li><p>Create a service key in the format <code>cf create-service-key &lt;service_instance&gt; &lt;service_key&gt;</code>. For example:</p>
+<pre><code class="language-bash"> cf create-service-key my-watson-assistant-service myKey</code></pre>
+</li>
+<li><p>Retrieve the credentials from the service key using the command <code>cf service-key &lt;service_instance&gt; &lt;service_key&gt;</code>. For example:</p>
+<pre><code class="language-bash"> cf service-key my-watson-assistant-service myKey</code></pre>
+<p>The output from this command is a JSON object, as in this example:</p>
+<pre><code class="language-JSON"> {
+   &quot;password&quot;: &quot;87iT7aqpvU7l&quot;,
+   &quot;url&quot;: &quot;https://gateway.watsonplatform.net/conversation/api&quot;,
+   &quot;username&quot;: &quot;ca2905e6-7b5d-4408-9192-e4d54d83e604&quot;
+ }</code></pre>
+</li>
+<li><p>Paste  the <code>password</code> and <code>username</code> values (without quotation marks) from the JSON into the <code>ASSISTANT_PASSWORD</code> and <code>ASSISTANT_USERNAME</code> variables in the <code>.env</code> file. For example:</p>
+<pre><code> ASSISTANT_USERNAME=ca2905e6-7b5d-4408-9192-e4d54d83e604
+ ASSISTANT_PASSWORD=87iT7aqpvU7l</code></pre></li>
+<li><p>In your <a href="https://console.ng.bluemix.net/dashboard/apps">IBM Cloud console</a>, open the Watson Assistant service instance where you imported the workspace.</p>
+</li>
+<li><p>Click the menu icon in the upper-right corner of the workspace tile, and then select <strong>View details</strong>.</p>
+<p> <img src="WatsonAssistant/readme_images/workspace_details.png" alt="Screen capture of workspace tile menu"></p>
+</li>
+<li><p>Click the <img src="WatsonAssistant/readme_images/copy_icon.png" alt="Copy"> icon to copy the workspace ID to the clipboard.</p>
+</li>
+<li><p>On the local system, paste the workspace ID into the WORKSPACE_ID variable in the <code>.env</code> file. Save and close the file.</p>
+</li>
+</ol>
+<p><a name='InstallStartApp'></a></p>
+<h1 id="installing-and-starting-the-apps">Installing and starting the apps</h1>
+<ol>
+<li><p>Throughout, we will assume that a YARP server is running. If that&#39;s not your case, run <code>$&gt; yarp server</code> on a machine where YARP is installed.</p>
+</li>
+<li><p>Go into <code>yarp.js/WatsonAssistant</code> folder.</p>
+</li>
+<li><p>Install the demo app package into the local Node.js runtime environment:</p>
+<pre><code class="language-bash"> npm install</code></pre>
+</li>
+<li><p>Start the app:</p>
+<pre><code class="language-bash"> npm start</code></pre>
+</li>
+<li><p>Point your browser to <a href="http://localhost:3000">http://localhost:3000</a> to try out  the app and open the Yarp ports.</p>
+</li>
+<li><p>In another terminal, check if the ports are opened (&quot;ibmjs/send:o&quot; and &quot;ibmjs/receive:i&quot;) :</p>
+<pre><code class="language-bash"> yarp name list</code></pre>
+</li>
+<li><p>Go back to <code>yarp.js</code> folder.</p>
+</li>
+<li><p>Recently, Google Chrome has changed its privacy settings, requiring applications that access the device microphone or camera to run from a secure origin (HTTPS). We have provided a self-signed certificate to run local applications from an HTTPS domain rather than HTTP, therefore circumventing this issue. <strong>However we have not yet determined whether the HTTPS will introduce latencies in yarp.js data transmission</strong>.</p>
+<p> To start the &quot;secure&quot; yarp.js server, simply run:</p>
+<pre><code> $&gt; node examples/examples_https.js</code></pre><p> then go to:</p>
+<pre><code> https://your.machine.ip.address:3000  // &lt;--- mind the https at the beginning!!</code></pre><p> <strong>Note</strong>. Mind the <em>https</em> in the beginning you cannot use <code>localhost</code> in place of <code>your.machine.ip.address</code></p>
+<p> You should get a <strong>warning</strong>, telling you that &quot;your connection is not private&quot;. Click on the link <code>Advanced</code> and then <code>Proceed to (address)</code>.</p>
+<p> You should now be able to see the usual starting page of yarp.js examples. But you are now running on HTTPS!</p>
+<p> Open the browser on any device connected to your network and go to the address</p>
+<pre><code> your.machine.ip.address:3000
+ // Please *do not use* localhost:3000 (although it works if you are on the same machine where you run the examples.js script).</code></pre><p> (You can get your device ip by typing <code>$&gt; ifconfig</code> on a shell on the machine where the examples is running). You should see a webpage like the one below</p>
+<p> <img src="images/example_browser_landing.png" alt="Screen capture of Yarp.js App"></p>
+<p> The available examples will be shown in the header.</p>
+</li>
+<li><p>Click on <strong>Message IBM</strong> example and check if the ports are opened (&quot;yarpjs/send:o&quot; and &quot;yarpjs/receive:i&quot;) :</p>
+<pre><code class="language-bash"> yarp name list</code></pre>
+</li>
+<li><p>You should obtain this outcome (all the ports opened):</p>
+<pre><code class="language-bash"> registration name /ibmjs/receive:i ip xxx.xxx.xx.xxx port 10003 type tcp
+ registration name /ibmjs/send:o ip xxx.xxx.xx.xxx port 10005 type tcp
+ registration name /yarpjs/receive:i ip xxx.xxx.xx.xxx port 10002 type tcp
+ registration name /yarpjs/send:o ip xxx.xxx.xx.xxx port 10004 type tcp
+ *** end of message</code></pre>
+</li>
+</ol>
+<p><a name='DeployingApp'></a></p>
+<h1 id="deploying-to-ibm-cloud">Deploying to IBM Cloud</h1>
+<p>You can use Cloud Foundry to deploy your local version of the app to IBM Cloud.</p>
+<ol>
+<li><p>In the project root directory, open the <code>manifest.yml</code> file:</p>
+<ul>
+<li>In the <code>applications</code> section of the <code>manifest.yml</code> file, change the <code>name</code> value to a unique name for your version of the demo app.</li>
+<li>In the <code>services</code> section, specify the name of the Watson Assistant service instance you created for the demo app. If you do not remember the service name, use the <code>cf services</code> command to list all services you have created.</li>
+</ul>
+<p>The following example shows a modified <code>manifest.yml</code> file:</p>
+<pre><code class="language-yml">---
+declared-services:
+my-watson-assistant-service:
+  label: conversation
+  plan: free
+applications:
+- name: watson-assistant-simple
+command: npm start
+path: .
+memory: 256M
+instances: 1
+services:
+- my-watson-assistant-service
+env:
+  NPM_CONFIG_PRODUCTION: false</code></pre>
+</li>
+<li><p>Push the app to IBM Cloud:</p>
+<pre><code class="language-bash">cf push</code></pre>
+<p>Access your app on IBM Cloud at the URL specified in the command output.</p>
+</li>
+</ol>
+<p><a name='Troubleshooting'></a></p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If you encounter a problem, you can check the logs for more information. To see the logs, run the <code>cf logs</code> command:</p>
+<pre><code class="language-none">cf logs &lt;application-name&gt; --recent</code></pre>
+<h1 id="license">License</h1>
+<p>Material included in yarp.js is released under the terms of the LGPLv3.</p>
