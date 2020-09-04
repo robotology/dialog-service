@@ -38,9 +38,11 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-useref": "^3.0.8",
     "helmet": "^3.1.0",
+    "helmet-csp": ">=2.9.1",
     "lamejs": "^1.2.0",
     "node-wav": "0.0.2",
     "play-sound": "^1.1.2",
+    "kind-of": ">=6.0.3",
     "vcap_services": "^0.2.0",
     "watson-developer-cloud": "^3.0.7",
     "whatwg-fetch": "^2.0.1"
